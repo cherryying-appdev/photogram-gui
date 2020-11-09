@@ -38,7 +38,8 @@ class PhotosController < ApplicationController
     a_new_photo.save
 
     # render({ :template => "photo_templates/create.html.erb"})
-    redirect_to("/photos/" + a_new_photo.id.to_s)
+    next_url = "/photos/" + a_new_photo.id.to_s
+    redirect_to(next_url)
   end
 
   def update
@@ -49,8 +50,13 @@ class PhotosController < ApplicationController
     input_image = params.fetch("query_image")
     input_caption = params.fetch("query_caption")
 
-    the_photo.image = 
+    the_photo.image = input_image
+    the_photo.caption = input_caption
 
-    render({ :template => "photo_templates/update.html.erb"})
+    the_photo.save
+
+    # render({ :template => "photo_templates/update.html.erb"})
+    next_url = "/photos/" + the_photo.id.to_s
+    redirect_to(next_url)
   end
 end
